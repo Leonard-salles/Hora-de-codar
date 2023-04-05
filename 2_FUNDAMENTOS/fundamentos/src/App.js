@@ -1,5 +1,5 @@
 // components
-import FirstComponent from './Components/FirstComponent';
+import Challenge from './Components/Challenge';
 
 // styles
 import './App.css';
@@ -7,7 +7,6 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <FirstComponent/>
     </div>
   );
 }
