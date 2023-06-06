@@ -1,63 +1,80 @@
 
 import './App.css';
 
-import {useState, useEffect} from "react"
+import {useState} from "react"
 
-// custo hook 
-import {useFetch} from "./hooks/useFetch"
+// 4 - custom hook 
+import { useFetch } from './hooks/useFetch';
 
-const url = "http://localhost:3000/productos/"
+const url = "http://localhost:3000/productos"
 
 function App() {
+  const [products, setProducts] = useState([])
 
-  const [products, setProducts] = useState([]);
-
-  // custom 
-  const {data: items, httpConfig } = useFetch(url)
-
-
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+    //4 custom hook 
+    const { data: items, httpConfig, loading, error } = useFetch(url)
 
 
-  const handleSubmit = async (e) =>{
-    e.preventDefault()
-    
-    const product = {
-      name,
-      price,
-    };
-    console.log(product)
+    const [name, setName] = useState("")
+    const [price, setPrice] = useState("")
+  // 1- resgatando dados
 
-    // const res = await fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(product)
-    // });
+  // useEffect(() =>{
+  //   async function fetchData(){
+  //     const res = await fetch(url)
 
-    
-    // 3 carregamento dinamico 
-    // const addedProduct = await res.json()
-    // setProducts((prevProducts) => [...prevProducts, addedProduct]) 
+  //     const data = await res.json()
+  
+  //     setProducts(data)
+  //   }
+  //   fetchData()
+  // },[])
 
-    setName("")
-    setPrice("")
+    // 2 - adição produtos 
+    const handleSubmit = async (e) => {
+      e.preventDefault()
 
-    // 5 refatorando hook
-    httpConfig(product, "POST")
+      const product = {
+        name,
+        price,
+      };
 
-  }
+    //   const res = await fetch(url, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-type" : "application/json"
+    //     },
+    //     body : JSON.stringify(product)
+    //   })
+    //   // 3 carregamento dinamico
+    //   const addedProduct = await res.json()
 
+    //   setProducts((prevProducts) => [...prevProducts, addedProduct])
+
+
+    // 5 refatorando post
+      httpConfig(product, "POST")
+      setName("")
+      setPrice("")
+    } 
+
+    // desafio 6
+    const handleRemove = (id) => {
+      httpConfig(id, "DELETE")
+    }
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
-      <ul>
-        {items && items.map((products) => (
-          <li key={products.id}>{products.name} - R${products.price} </li>
-        ))}
-      </ul>
+      {/* 6 Loading */}
+      {loading && <p>Carregando dados...</p>}
+      {error && <p>{error}</p>}
+      {!error && (
+          <ul>
+            {items && items.map((products) => (
+              <li key={products.id}>{products.name} - R${products.price} <button onClick={() => handleRemove(products.id)} value={products.id}>Delete</button></li>
+            ))}
+          </ul>
+      )}
       <div className='add-product'>
           <form onSubmit={handleSubmit}>
             <label>
@@ -68,7 +85,9 @@ function App() {
               <span>Preço:</span>
               <input type="number" value={price} name='price' onChange={(e) => {setPrice(e.target.value)}} />
             </label>
-            <input type="submit" value="Criar" />
+            {/* 7 - sate de loading no post */}
+            {loading && <input type="submit" disabled value="Aguarde" />}
+            {!loading && <input type="submit" value="Criar" />}
           </form>
       </div>
     </div>

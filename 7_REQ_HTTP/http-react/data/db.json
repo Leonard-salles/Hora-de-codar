@@ -16,19 +16,29 @@
       "price": 29.9
     },
     {
-      "name": "capa de chuva",
-      "price": "25.50",
+      "name": "Teclado",
+      "price": "110",
       "id": 4
     },
     {
-      "name": "guardanapo",
-      "price": "5",
+      "name": "Cadeira",
+      "price": "200",
       "id": 5
     },
     {
       "name": "mouse",
-      "price": "60",
+      "price": "50",
       "id": 6
+    },
+    {
+      "name": "Suporte monito",
+      "price": "120",
+      "id": 7
+    },
+    {
+      "name": "cabo hdmi",
+      "price": "10",
+      "id": 8
     }
   ]
 }
