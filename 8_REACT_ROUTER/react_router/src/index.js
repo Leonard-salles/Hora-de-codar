@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 
 import Home from "./pages/Home"
 import About from "./pages/About"
+import Product from './pages/Product';
+import Info from './pages/Info';
+import NotFound from './pages/NotFound';
+import Search from './pages/Search';
 
 const router = createBrowserRouter([
   {
@@ -18,11 +22,31 @@ const router = createBrowserRouter([
       element: <Home />
     },
     {
+      path: "*",
+      element: <NotFound />
+    },
+    {
       path: "/about",
       element: <About />
-    }
+    },
+    {
+      // dinamic route
+      path: "/products/:id",
+      element: <Product />
+    },
+    {
+      // Nested route
+      path: "/products/:id/info",
+      element: <Info />
+    },
+    {
+      // searc
+      path: "/search",
+      element: <Search />
+    },
   ]
-  }
+  },
+  
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
