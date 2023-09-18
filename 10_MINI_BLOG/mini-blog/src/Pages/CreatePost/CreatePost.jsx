@@ -1,20 +1,18 @@
 import { Navigate } from "react-router-dom";
+import styles from "./CreatePost.module.css";
 import { useAuthValue } from "../../Context/AuthContext";
-import styles from "./Login.module.css"
 
-const Login = () => {
+const CreatePost = () => {
   const { user } = useAuthValue();
 
-  if(user){
+  if(!user){
     return <Navigate to="/" />
   }
   return (
-    <>
-      <div>
-          <h1>Login</h1>
-      </div>
-    </>
+    <div>
+        <h1>Create Post</h1>
+    </div>
   )
 }
 
-export default Login
+export default CreatePost

@@ -32,7 +32,7 @@ function App() {
 
   return (
     <>
-    <AuthProvider value={user}>
+    <AuthProvider value={{user}}>
         <NavBar />
         <div className="container">
           <Outlet />

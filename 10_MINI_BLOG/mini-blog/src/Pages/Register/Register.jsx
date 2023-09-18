@@ -4,6 +4,8 @@ import styles from "./Register.module.css";
 import { useState, useEffect } from "react";
 
 import { useAutentication } from "../../Hooks/useAutentication";
+import { useAuthValue } from "../../Context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 const Register = () => {
 
@@ -29,7 +31,7 @@ const Register = () => {
       setError("As Senhas não são iguais")
       return
     }
-
+    console.log(user)
     const res = await createUser(user);
 
     console.log(res)
@@ -41,7 +43,11 @@ const Register = () => {
       setError(authError)
     }
   }, [authError])
+  const { user:userAuth } = useAuthValue();
 
+  if(userAuth){
+    return <Navigate to="/" />
+  }
   return (
     <div className={styles.register}>
         <h1>Cadastre-se para postar</h1>
