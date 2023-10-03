@@ -26,7 +26,7 @@ export const useAutentication = () =>{
             return;
         }
     }
-
+    // register 
     const createUser = async(data) =>{
         checkIfIsCancelled()
 
@@ -65,6 +65,37 @@ export const useAutentication = () =>{
 
         
     }
+    // logOut
+
+    const logout = () =>{
+        checkIfIsCancelled();
+        signOut(auth);
+    }
+
+    //login 
+    const login = async(data) =>{
+        checkIfIsCancelled();
+        setLoading(true);
+        setError(false);
+
+        try{
+            await signInWithEmailAndPassword(auth, data.email, data.password)
+            setLoading(false);
+            
+        }catch(error){
+            let systemErrorMessage
+            console.log(error.message)
+            if(error.message.includes("invalid-login")){
+                systemErrorMessage = "Usuário não encontrado"
+            }else if(error.message.includes("wrong-password")){
+                systemErrorMessage = "Senha Incorreta"
+            }else{
+                systemErrorMessage = "Ocorreu algum erro, por favor tente novamente mais tarde"
+            }
+            setError(systemErrorMessage)
+            setLoading(false);
+        }
+    }
 
     useEffect(() =>{
         return () =>{
@@ -77,6 +108,8 @@ export const useAutentication = () =>{
         createUser,
         error,
         loading,
+        logout,
+        login
     }
 
 }
